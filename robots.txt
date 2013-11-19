@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://code4mind.github.io/sitemap.xml 

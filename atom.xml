@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://code4mind.github.io/atom.xml" rel="self"/>
+  <link href="http://code4mind.github.io/"/>
+  <updated>2013-11-19T00:31:13-08:00</updated>
+  <id>http://code4mind.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[hello octopress]]></title>
+    <link href="http://code4mind.github.io/blog/2013/11/09/hello-octopress/"/>
+    <updated>2013-11-09T04:49:00-08:00</updated>
+    <id>http://code4mind.github.io/blog/2013/11/09/hello-octopress</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
