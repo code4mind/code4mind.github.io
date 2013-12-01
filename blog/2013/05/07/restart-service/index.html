@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Zeni7h</title>
+  <title>系统重启后开启Oracle 11g、Hadoop、Hive相关服务 - Zeni7h</title>
   <meta name="author" content="eric">
 
   
@@ -19,7 +19,7 @@ OK，进入正题， &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://code4mind.github.io">
+  <link rel="canonical" href="http://code4mind.github.io/blog/2013/05/07/restart-service">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Zeni7h" type="application/atom+xml">
@@ -64,15 +64,12 @@ OK，进入正题， &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/07/restart-service/">系统重启后开启Oracle 11g、Hadoop、Hive相关服务</a></h1>
+      <h1 class="entry-title">系统重启后开启Oracle 11g、Hadoop、Hive相关服务</h1>
     
     
       <p class="meta">
@@ -95,7 +92,7 @@ OK，进入正题， &hellip;">
   </header>
 
 
-  <div class="entry-content"><h5>大四快毕业了，寒假回来就一直做毕设，烂尾了好多文章在电脑上，之后慢慢填坑。今天先把我做毕设时遇到的一个问题记录一下。</h5>
+<div class="entry-content"><h5>大四快毕业了，寒假回来就一直做毕设，烂尾了好多文章在电脑上，之后慢慢填坑。今天先把我做毕设时遇到的一个问题记录一下。</h5>
 
 <p>我的毕业设计是跟分布式计算相关的，所以就用到了Hadoop,做的过程实在是蛋疼无比，没有参考，没有指导，大部分资料只能查官方文档或者去google。<br/>
 OK，进入正题，这个项目是基于CentOS系统的分布式架构，采用的Hadoop，还用到Hadoop下子项目里面的Sqoop,Hive，详细的介绍有机会再另一篇文章中写一下，这里讲下我当时在系统重启后遇到的无法正常运行程序的问题。<br/>
@@ -157,22 +154,16 @@ startup`
 <code>cd /usr/local/hive/bin  
  ./hive --service hive-server</code></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/05/newone/">使用rpmbuild构造离线RPM包</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">eric</span></span>
+
+      
 
 
 
@@ -184,80 +175,36 @@ startup`
   
 
 
-<time datetime="2013-05-05T16:55:00-07:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
+<time datetime="2013-05-07T21:15:00-07:00" pubdate data-updated="true">May 7<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>, <a class='category' href='/blog/categories/hive/'>Hive</a>, <a class='category' href='/blog/categories/oracle/'>Oracle</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><h3>构造RPM包步骤</h3>
-
-<p>1.配置打包环境<br/>
-2.获取源代码<br/>
-3.编写SPEC文件<br/>
-4.使用rpmbuild打包</p>
-
-<h4>1.配置打包环境</h4>
-
-<p>（1）构造rpm包首先需要安装rpmbuild,gcc工具。</p>
-
-<p>（2）在Fedora等系统中，并不会直接生成构造rpm所需的目录。因此，需要手动创建。以Fedora为例，执行：<br/>
-<code>sudo -i  
-mkdir -P /rpmbuild/{S{OURCE,PEC,RPM}S,BUILD,RPMS}</code></p>
-
-<h4>2.获取源代码</h4>
-
-<p>（1）要制作rpm包需要先将源码压缩为tar.gz格式，假设源文件存放的目录为test-1，则执行以下命令：<br/>
-<code>tar -cf test-1.tar test-1  
-gzip -9 test-1.tar</code></p>
-
-<p>结果如下图所示：<br/>
-<img src="http://farm9.staticflickr.com/8134/8709576269_8f5a15120e.jpg" alt="unzip" /><br/>
-（2）将源文件压缩包放入rpmbuild/SOURCES/ 目录中。</p>
-
-<h4>3.编写SPEC文件</h4>
-
-<p>spec文件是构造rpm包的核心，包含所有rpm包的关键信息，因此编写spec文件是最为重要的环节。<br/>
-测试过程中使用的spec文件较为简单，算是一个基本的spec文件模版,如下：  <img src="http://farm9.staticflickr.com/8407/8709578559_743089ed1b.jpg" alt="SPEC" /><br/>
-将编写好的spec文件放入 rpmbuild/SPECS/ 目录中。</p>
-
-<h4>4.使用rpmbuild打包</h4>
-
-<p>假设我们编写的spec文件名为test.spec,执行以下命令进行制作二进制包：<br/>
-<code>rpmbuild -bb test.spec</code><br/>
-如果之前的步骤正确无误，则会自动进行打包，如下图：<br/>
-<img src="http://farm9.staticflickr.com/8415/8710720266_21d98489dc.jpg" alt="build-step1" /><br/>
-<img src="http://farm9.staticflickr.com/8256/8710711360_610dc4230a.jpg" title="" alt="build-step2" /><br/>
-如图所示，我们制作出了自己的rpm包，rpm包生成在 rpmbuild/RPMS/i386 目录下(i386是系统的架构类型)。
-<img src="http://farm9.staticflickr.com/8257/8709577941_7c9ab42a3f.jpg" alt="rpm" /><br/>
-使用yum工具安装并检测制作的rpm包<br/>
-首先使用yum工具安装一下我们制作的rpm包，检测是否能够成功安装。<br/>
-<code>yum install test-1-1.i386.rpm</code><br/>
-执行过程如下图所示：<br/>
-<img src="http://farm9.staticflickr.com/8408/8709614221_372bd07a29.jpg" alt="install-step1" /><br/>
-输入y,继续<br/>
-<img src="http://farm9.staticflickr.com/8552/8710705248_59b3e6f7cb.jpg" alt="install-step2" /><br/>
-安装成功，确认一下是否在已安装列表中，可以使用下列命令：<br/>
-<code>yum list "test-1-1.i386</code><br/>
-结果如下图：<br/>
-<img src="http://farm9.staticflickr.com/8138/8710703614_beec910308.jpg" alt="check" /><br/>
-可以看到，我们的rpm包已经成功的安装在系统中了。</p>
-
-<h3>整个构造RPM包的流程到此结束，我们可以使用自己构造的RPM包在相同的系统中使用了。</h3>
+      <div class="sharing">
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/05/newone/" title="Previous Post: 使用rpmbuild构造离线RPM包">&laquo; 使用rpmbuild构造离线RPM包</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -281,6 +228,7 @@ gzip -9 test-1.tar</code></p>
 
   
 </aside>
+
 
     </div>
   </div>

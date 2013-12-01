@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://code4mind.github.io/blog/2013/11/09/hello-octopress/</loc>
+        <loc>http://code4mind.github.io/blog/2013/05/05/newone/</loc>
+        <lastmod>2013-11-19T00:31:01-08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://code4mind.github.io/blog/2013/05/07/restart-service/</loc>
         <lastmod>2013-11-19T00:31:01-08:00</lastmod>
     </url>
     <url>
