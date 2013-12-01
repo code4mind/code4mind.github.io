@@ -1,0 +1,47 @@
+---
+layout: post
+title: "系统重启后开启Oracle 11g、Hadoop、Hive相关服务"
+date: 2013-05-07 21:15
+comments: true
+categories: [Hadoop,Oracle,Hive]
+---
+#####大四快毕业了，寒假回来就一直做毕设，烂尾了好多文章在电脑上，之后慢慢填坑。今天先把我做毕设时遇到的一个问题记录一下。  
+我的毕业设计是跟分布式计算相关的，所以就用到了Hadoop,做的过程实在是蛋疼无比，没有参考，没有指导，大部分资料只能查官方文档或者去google。  
+OK，进入正题，这个项目是基于CentOS系统的分布式架构，采用的Hadoop，还用到Hadoop下子项目里面的Sqoop,Hive，详细的介绍有机会再另一篇文章中写一下，这里讲下我当时在系统重启后遇到的无法正常运行程序的问题。  
+大家都知道，一般这种系统都是运行在服务器上的，而服务器大多情况下不会轻易重启，但是我是用笔记本开发，不可能不关机，所以重启后会就比较蛋疼，要重新开启所有服务才能正常跑程序，不然会出现各种奇葩的错误。  
+##1.Oracle 11g  
+#####(1)切换Oracle数据库用户  
+在terminal中输入  
+	`su oracle  
+ 	password`  
+#####(2)开启Oracle数据库 
+在terminal中输入   
+	`sqlplus /as sysdba  
+ 	startup`  
+#####(3)开启Oracle的监听
+在terminal中输入  
+	`lsnrctl  
+	 start`  
+看到terminal中的回显，正常的话会显示oracle相关参数，然后就可以通过SQL Explorer等工具操作数据库了
+##2.Hadoop
+使用Hadoop必须要开SSH，不然不能Map-reduce
+#####(1)开启ssh服务
+在terminal中输入  
+`service sshd start`
+#####(2)启动Hadoop服务
+*如果没有在/etc/profile中配置Hadoop的环境变量，那么要先进入Hadoop的安装路径
+`cd /usr/local/hadoop/bin`  
+然后启动Hadoop  
+`./start-all.sh` 
+正常启动的话,在terminal中会回显信息，不放心的话可以利用另外一个工具，在terminal中输入
+`/usr/java/jdk1.7.0_15/bin/jps`  
+回显如果出现namenode,datanode,jobtracker,tasktracker那么说明启动成功了。
+##3.Hive
+#####(1)开启Hive server
+如果不启动Hive server的话，当你用JDBC连接Hive的时候就会出现cant't establish connection，所以一定要启动Hive server  
+*如果没配置Hive的环境变量，那就进入Hive的安装路径
+`cd /usr/local/hive/bin  
+ ./hive --service hive-server`
+
+
+
