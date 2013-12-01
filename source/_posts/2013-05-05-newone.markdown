@@ -12,7 +12,7 @@ categories: Linux RPM
 2.获取源代码  
 3.编写SPEC文件  
 4.使用rpmbuild打包  
-
+<!-more->
 ####1.配置打包环境
 
 （1）构造rpm包首先需要安装rpmbuild,gcc工具。
