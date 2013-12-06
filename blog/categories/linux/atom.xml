@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Zeni7h]]></title>
   <link href="http://code4mind.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://code4mind.github.io/"/>
-  <updated>2013-12-01T08:06:12-08:00</updated>
+  <updated>2013-12-06T06:55:09-08:00</updated>
   <id>http://code4mind.github.io/</id>
   <author>
     <name><![CDATA[eric]]></name>
@@ -23,8 +23,10 @@
 <p>1.配置打包环境<br/>
 2.获取源代码<br/>
 3.编写SPEC文件<br/>
-4.使用rpmbuild打包<br/>
-&lt;!-more-></p>
+4.使用rpmbuild打包</p>
+
+<!--more-->
+
 
 <h4>1.配置打包环境</h4>
 
