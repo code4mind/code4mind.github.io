@@ -72,7 +72,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/03/02/libvirt-action-diary-001/">Libvirt_action_diary_001</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/03/02/libvirt-action-diary-001/">Libvirt 实践日记</a></h1>
     
     
       <p class="meta">
@@ -107,61 +107,12 @@
 <p>在libvirt官网上找到这几句话，我想足以表达libvirt是用来做什么的<br/>
 A toolkit to interact with the virtualization capabilities of recent versions of Linux (and other OSes),the goal of libvirt: <strong>to provide a common and stable layer sufficient to securely manage domains on a node, possibly remote.</strong></p>
 
-<h4>日记-001</h4>
-
-<p>我最近的工作是要对运行在host上的domain进行动态的迁移，以缓解某个host过载的情况，当前版本的工作是设计并开发出一个人工执行负载均衡的模块。
-花了一天时间看了看libvirt的介绍和文档，稍微了解了一下实验室项目的结构，就开始着手这个模块的设计了。最初我以为libvirt这么高级的东东，只要调用个函数就可以了。其实不然啊，还是我太天真。直接调用函数有90%的可能是运行报错，就算你运气好误打误撞的跑起来了，估计迁移完你虚拟机也跪了。那么，在什么样的情况下，才能迁移呢？<br/>
-按照官网的说法，跟这次迁移有关的两个host必须有相同的硬件架构，不然是不行的，这个条件隐藏在libvirt在线文档的角落里</p>
-
-<pre><code>There are many limitations on migration imposed by the underlying technology  
-  - for example it may not be possible to migrate between different processors even with the same  
-  architecture, or between different types of hypervisor.
-</code></pre>
-
-<p>顺便吐槽下官网的文档，写的太简洁了，而且也每个demo给看看，条件说的也不清楚，如果你认为仅仅满足上面条件就能迁移那就大错特错了，还有其他条件的。<br/>
-假设我们已经有了两个硬件架构相同的hosts，现在通过libvirt提供的接口进行domain迁移。也就是调用virDomainMigrate函数来实现这个功能，virDomainMigrate的原型如下：</p>
-
-<pre><code> virDomainPtr   virDomainMigrate    (virDomainPtr domain,
-                 virConnectPtr dconn,
-                 unsigned long flags,
-                 const char * dname,
-                 const char * uri,
-                 unsigned long bandwidth)
-</code></pre>
-
-<p>传入的参数分别是：待迁移的domain,目标host的链接 dconn,迁移过程一些参数 flags，后面三个可选，可以填NULL，除非你有其他要求。<br/>
-函数的返回值是一个指向新domain的指针。
-主要介绍一下flags的选取，以及我在实验过程中遇到的蛋疼的问题。<br/>
-flag的简单说明：<br/>
-1. VIR_MIGRATE_LIVE:在线进行domain的迁移，不会在迁移过程中暂停镜像的运行。 <br/>
-2. VIR_MIGRATE_UNSAFE：忽略当前对迁移操作的安全检测，至于安全、不安全的标准我还没有深入了解。<br/>
-3. VIR_MIGRATE_PERSIST_DEST：当迁移成功后，domain永久驻留在新的host上。<br/>
-4. VIR_MIGRATE_PEER2PEER：直接连接源host和目标host <br/>
-5. VIR_MIGRATE_TUNNELLED：通过libvirt提供的rpc通道进行数据的传输，如果使用这个flag必须添加上一项。</p>
-
-<p>实验过程中那些蛋疼的问题，及部分解决方案：</p>
-
-<ol>
-<li>error: Unsafe migration: Migration may lead to data corruption if disks use cache != none<br/>
-使用API进行迁移时，需要在flags上添加 VIR_MIGRATE_UNSAFE</li>
-<li>QEMU Driver error : internal error hostname on destination resolved to localhost, but migration requires an FQDN<br/>
-ssh到目标host，运行hostname domain</li>
-<li><p>libvirt: error : argument unsupported: offline migration is not supported by the source host<br/>
-离线迁移有可能有些主机不支持，具体什么情况支持目前还没试验过。我只做了在线的测试，离线的是后续工作内容，等之后做了相关内容的研究在写吧。</p></li>
-<li><p>libvirt: Storage Driver error : cannot open file &lsquo;/imgs/xxx.raw&rsquo;: No such file or directory<br/>
-检查src和dst主机是否路径健全，是否都存有镜像文件</p></li>
-<li><p>迁移到另外一台host后，系统崩溃，无法找到boot文件<br/>
-检查双方主机是否存在相同的镜像，如果不存在要及时的把镜像分发到主机上。这个问题其实很重要，不仅要事先分发，还要及时更新和适时清理。否则会有些意想不到的问题出现。</p></li>
-<li><p>libvirt: QEMU Driver error : internal error Process exited while reading console log output: char device redirected to /dev/pts/3
-((null):28735): Spice-Warning **: reds.c:3065:reds_init_socket: reds_init_socket: binding socket to xxx.xxx.xxx.xxx:port failed
-failed to initialize spice server<br/>
-其实这是spice协议的错误，并不是libvirt的问题，主要是由于设置了Graphics address,因此在迁移之后，无法重新连接配置文件中指定的图形地址，所以会有错。可改为127.0.0.1。这种设置方法只能在domain所在host的机器上访问镜像的图形界面，如果要想远程访问需要调用另外一个函数。</p></li>
-</ol>
-
-
-<p>以上大概是我最近一两周实验室工作的总结，如果这个项目还会做下去的话，我也会继续更新关于libvirt的学习过程。希望我遇到的问题以及解决方案能够帮到其他人。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/02/libvirt-action-diary-001/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -271,7 +222,7 @@ OK，进入正题，这个项目是基于CentOS系统的分布式架构，采用
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/03/02/libvirt-action-diary-001/">Libvirt_action_diary_001</a>
+        <a href="/blog/2014/03/02/libvirt-action-diary-001/">Libvirt 实践日记</a>
       </li>
     
       <li class="post">

@@ -4,7 +4,7 @@
   <title><![CDATA[Zeni7h]]></title>
   <link href="http://code4mind.github.io/atom.xml" rel="self"/>
   <link href="http://code4mind.github.io/"/>
-  <updated>2014-03-02T06:13:47-08:00</updated>
+  <updated>2014-03-02T07:08:31-08:00</updated>
   <id>http://code4mind.github.io/</id>
   <author>
     <name><![CDATA[eric]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[libvirt_action_diary_001]]></title>
+    <title type="html"><![CDATA[libvirt 实践日记]]></title>
     <link href="http://code4mind.github.io/blog/2014/03/02/libvirt-action-diary-001/"/>
     <updated>2014-03-02T06:09:00-08:00</updated>
     <id>http://code4mind.github.io/blog/2014/03/02/libvirt-action-diary-001</id>
@@ -29,6 +29,9 @@
 
 <p>在libvirt官网上找到这几句话，我想足以表达libvirt是用来做什么的<br/>
 A toolkit to interact with the virtualization capabilities of recent versions of Linux (and other OSes),the goal of libvirt: <strong>to provide a common and stable layer sufficient to securely manage domains on a node, possibly remote.</strong></p>
+
+<!--more-->
+
 
 <h4>日记-001</h4>
 
